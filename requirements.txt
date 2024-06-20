@@ -1,0 +1,9 @@
+Django
+gunicorn
+django-heroku
+dj-database-url
+django-allauth == 0.60.1 
+django-bootstrap-v5
+django-storages
+boto3
+backports.zoneinfo; python_version < "3.9"

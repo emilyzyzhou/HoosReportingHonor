@@ -1,0 +1,19 @@
+.save-case-container {
+    display: flex;
+    justify-content: space-between; /* Ensure button is on the far right */
+    align-items: center; /* Centers vertically */
+    padding: 10px 0; /* Add padding above and below*/
+}
+
+.copy-btn {
+    padding: 5px 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.copy-btn:hover {
+    background-color: #0056b3;
+}

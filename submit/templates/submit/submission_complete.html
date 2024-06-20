@@ -1,0 +1,72 @@
+{% extends 'submit/base.html' %}
+{% block title %}Submission Complete | Hoos Reporting Honor{% endblock %}
+
+{% block header %}
+    <link href="../../static/submit/submission-features.css" rel="stylesheet">
+    <link href="../../static/submit/case-hash-copy-button.css" rel="stylesheet">
+{% endblock %}
+
+{% block banner %}
+    <div class="submit-jumbotron">
+        <h1 class="text-center mt-5">You have successfully submitted a report!</h1>
+    </div>
+{% endblock %}
+
+{% block main %}
+    <div class="case-id-container" style="display: flex; align-items: center;">
+        <p style="margin-bottom: 0;">Case ID: <span id="caseID">{{ case_hash }}</span></p>
+        <button onclick="copyCaseID()" class="copy-btn" style="margin-left: 10px;">Copy</button>
+    </div>
+
+    {% if user.is_authenticated %}
+        <p>Please save this Case ID if you want to check the status of your report later without logging in using our
+            case lookup feature "Find Your Reports" on the home page. Also, since you are currently logged in, then you
+            may also access all of your reports while logged in on your personal dashboard by
+            clicking {{ user.get_username }}'s dashboard in the top right of the site.</p>
+    {% else %}
+        <p>Please save this Case ID if you want to check the status of your report later using our case lookup feature
+            "Find Your Reports" on the home page as this will be your only way to review the report status and details
+            as an anonymous user.</p>
+    {% endif %}
+
+    <div class="container">
+        <p>Return to <a href="{% url 'shared:home' %}">home</a>.</p>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    /***************
+    * REFERENCES
+    * AI Agent: ChatGPT4
+    * Date: 2024-4-14
+    * Prompt: "how can I create a copy button for my django project that copies a case hash that is accessed through a
+    session data case id and displays responsive feedback to the user?"
+    ***************/
+    <script>
+        function copyCaseID() {
+            var copyText = document.getElementById("caseID");
+            var textArea = document.createElement("textarea");
+            textArea.value = copyText.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            textArea.remove();
+
+            // Create a tooltip-like feedback
+            var feedback = document.createElement("div");
+            feedback.textContent = "Copied Hash to Clipboard!";
+            feedback.style.position = "fixed";
+            feedback.style.bottom = "20px";
+            feedback.style.right = "20px";
+            feedback.style.padding = "5px 10px";
+            feedback.style.backgroundColor = "rgba(0, 123, 255, 0.8)";
+            feedback.style.color = "white";
+            feedback.style.borderRadius = "5px";
+            document.body.appendChild(feedback);
+
+            setTimeout(function () {
+                document.body.removeChild(feedback);
+            }, 2000);  // feedback message disappear after 2 seconds
+        }
+    </script>
+{% endblock %}

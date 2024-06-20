@@ -1,0 +1,47 @@
+{% extends "submit/base.html" %}
+{% load static %}
+
+{% block title %}Reports Dashboard | Hoos Reporting Honor{% endblock %}
+
+{% block main %}
+    <h1>Completed Reports</h1>
+
+    <table class="table table-hover table-responsive">
+        <thead class="table-dark">
+        <tr>
+            <th scope="col">Case ID</th>
+            <th scope="col">Submitted By</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date ({{ current_timezone }})</th>
+            <th scope="col">Files</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for report in reports %}
+            <tr>
+                <td>
+                    <span class="hash-cell">{{ report.report_hash }}</span>
+                </td>
+                <td>
+                    {% if report.user %}
+                        {{ report.user.username }}
+                    {% else %}
+                        Anonymous
+                    {% endif %}
+                </td>
+                <td>{{ report.status }}</td>
+                <td>{{ report.submission_date }}</td>
+                <td>
+                    <form method="POST" action="{% url 'history:report' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="report_id" value="{{ report.id }}">
+                        <input type="hidden" name="change_status_to_pending" value="true">
+                        <button type="submit" class="btn btn-primary btn-sm">View Report</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

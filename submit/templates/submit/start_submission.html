@@ -1,0 +1,37 @@
+{% extends 'submit/base.html' %}
+{% block title %}Start Submission | Hoos Reporting Honor{% endblock %}
+{% block header %}
+    <link href="../../static/submit/submission-features.css" rel="stylesheet">
+{% endblock %}
+{% block banner %}
+    <div class="text-center submit-jumbotron">
+        <h1>Start Submission</h1>
+    </div>
+{% endblock %}
+{% block main %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="honor-code-blurb">
+                    <p>Welcome to the UVA Honor Code reporting system. The Honor Code at the University of Virginia is a
+                        unique and
+                        long-standing tradition of trust, integrity, and respect. By submitting a report, you're helping
+                        to maintain
+                        the high ethical standards that define our community. Please ensure your report is accurate and
+                        truthful,
+                        reflecting our shared commitment to honor and integrity.</p>
+                    <p>Please go over the UVA Honor Code policy here: <a href="https://honor.virginia.edu/">UVA Honor
+                        Committee</a>
+                    </p>
+                    <p>If you have any questions about the process, please contact UVA Honor at honor@virginia.edu.</p>
+                </div>
+
+                <form method="post" action="{% url 'submit:report' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-lg mt-4">Start a Report</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,27 @@
+{% extends 'submit/base.html' %}
+{% block title %}Lookup | Hoos Reporting Honor{% endblock %}
+{% block main %}
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="text-center">
+            <h4 class="pb-1">To access details to any report that you have submitted while logged in to your account or
+                anonymously, please input the Case ID that was displayed after you submitted the report.</h4>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.report_hash }}
+                    {% if form.report_hash.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.report_hash.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

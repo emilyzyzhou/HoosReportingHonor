@@ -1,0 +1,51 @@
+.btn-custom {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;  /* Makes each button expand to fill its column */
+  height: 100px;
+  border: 2px solid #f66733;
+  border-radius: 10px;
+  color: #f66733;
+  text-decoration: none;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-custom:hover {
+  background-color: #f66733;
+  color: white;
+}
+
+.button-icon {
+  width: 50px;
+  height: auto;
+  transition: filter 0.3s;
+}
+
+.btn-custom:hover .button-icon {
+  filter: brightness(0) invert(1);
+}
+
+.banner {
+  height: 500px;
+  background: url('images/lawn.jpg') no-repeat center center;
+  background-size: cover;
+  position: relative;
+  width: 100vw;
+  margin-top: 0; /* ensures it touches orange top-strip */
+  padding-bottom: 20px; /* bottom squares won't touch banner */
+
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5); /* dark overlay for text visibility otherwise cant see white text */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.container-with-padding {
+    padding: 0 25px;
+}

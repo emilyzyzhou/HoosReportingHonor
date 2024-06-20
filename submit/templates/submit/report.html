@@ -1,0 +1,109 @@
+{% extends 'submit/base.html' %}
+{% block title %}Report Submission | Hoos Reporting Honor{% endblock %}
+{% block header %}
+    <link href="../../static/submit/submission-features.css" rel="stylesheet">
+{% endblock %}
+{% block banner %}
+     <div class="submit-jumbotron">
+        <h1 class="text-center mt-5">Incident Report Form</h1>
+    </div>
+{% endblock %}
+{% block main %}
+    {% load static %}
+    <div class="container">
+        <form
+                action="{% url 'submit:report' %}"
+                method="post"
+                enctype="multipart/form-data"
+                class="mt-4"
+        >
+            {% csrf_token %}
+            <div class="section">
+                <h2>Background Information</h2>
+                <div class="form-group">
+                    <label for="date">Date of Incident:</label>
+                    <input
+                            type="date"
+                            id="date"
+                            name="incident_date"
+                            class="form-control"
+                            required
+                            max=""
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="location">Location of Incident:</label>
+                    <input
+                            type="text"
+                            id="location"
+                            name="incident_location"
+                            class="form-control"
+                            required
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="incident_category" >
+                        Incident Category:
+                        <i class="fas fa-question-circle" data-toggle="tooltip" title="Please select the category that best describes the incident. For more information, please refer to the 'Incident Categories' tab."></i>
+                    </label>
+                    <select id="incident_category" name="incident_category" class="form-control" required>
+                        <option value="">Select</option>
+                        <option value="lying">Lying</option>
+                        <option value="cheating">Cheating</option>
+                        <option value="stealing">Stealing</option>
+                    </select>
+                </div>
+            </div>
+            <div class="section" style="margin-top: 20px; ">
+                <h2>Involved Students/Staff</h2>
+                <h5>Please provide their UVA computing IDs, separated by commas</h5>
+                <div class="form-group">
+                    <label for="students_involved">Involved Parties:</label>
+                    <input
+                            type="text"
+                            id="students_involved"
+                            name="students_involved"
+                            class="form-control"
+                            placeholder="e.g. abc1de, fgh2ij, klm3no"
+                            required
+                    />
+                </div>
+            </div>
+
+            <div class="section" style="margin-top: 20px;">
+                <h2>Incident Summary</h2>
+                <div class="form-group">
+                    <label for="summary">Summary:</label>
+                    <textarea
+                            id="summary"
+                            name="report_summary"
+                            class="form-control"
+                            rows="4"
+                            required
+                    ></textarea>
+                </div>
+            </div>
+            <div class="section" style="margin-top: 20px; ">
+                <h2>Attach Files(.txt, .pdf, .jpg)</h2>
+                <div class="form-group">
+                    <label for="fileUpload">Upload Files:</label>
+                    <input
+                            type="file"
+                            id="fileUpload"
+                            name="file_field"
+                            class="form-control"
+                            multiple>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 10px;margin-bottom: 20px;">Submit</button>
+
+        </form>
+    </div>
+<script>
+    document.getElementById('date').max = new Date().toISOString().split('T')[0];
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+{% endblock %}
+

@@ -1,0 +1,63 @@
+{% extends 'submit/base.html' %}
+{% block title %}Login | Hoos Reporting Honor{% endblock %}
+
+{% block banner %}
+    <div class="text-center mb-2" style="background-color: #f66733; padding: 25px; width: 100%;">
+        <h1 style="color: white">Sign in to keep track of your reports!</h1>
+    </div>
+{% endblock %}
+
+{% block main %}
+    {% load static %}
+    <div class="d-flex justify-content-center align-items-center vh-80" style="padding-top:10px">
+        <div class="text-center">
+            <h4>If you want to submit a report anonymously, click <a
+                    href="{% url 'submit:start_submission' %}">here.</a></h4>
+            <h6>Unless you are a Django admin, please sign in with Google.</h6>
+            <form action="{% url 'login:login_request' %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            placeholder="email@email.com"
+                    />
+                </div>
+                <div class="mb-3">
+                    <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            placeholder="Password"
+                    />
+                </div>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endif %}
+
+            {% load socialaccount %}
+            <div class="row justify-content-center" style="padding-top: 20px">
+                <div class="col-sm-6 col-lg-3 mb-4 d-flex justify-content-center">
+                    {#                    <a href="{% provider_login_url 'google' %}" class="btn btn-info"#}
+                    {#                       style="color: white; min-width: 200px;">Sign in with Google</a>#}
+                    <div class="d-flex align-items-center">
+                        <!-- Icon with a right margin -->
+                        <a href="{% provider_login_url 'google' %}" class="btn btn-primary"
+                           style="color: white; min-width: 200px;">
+                            <img src="../../static/login/images/google.svg" alt="google" width="20"
+                                 style="margin-right: 10px;">
+                            Sign in with Google</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,62 @@
+{% extends 'submit/base.html' %}
+{% block title %}Home | Hoos Reporting Honor{% endblock %}
+{% block header %}
+    <link href="../../static/shared/home-features.css" rel="stylesheet">
+{% endblock %}
+{% block banner %}
+    <div class="banner">
+        <div class="overlay d-flex justify-content-center align-items-center pr-1 container-with-padding">
+            <h1 class="text-white text-center">Welcome to Hoos Reporting Honor!</h1>
+            <h6 class="text-white text-center pr-1">Worried about an honor code violation? Want to report it? Make an
+                anonymous submission or sign in to keep
+                track of all of your reports. You can also find the status of specific reports even without being signed
+                in using our Case ID system.</h6>
+        </div>
+    </div>
+{% endblock %}
+{% block main %}
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <a href="https://honor.virginia.edu/" class="btn-custom">
+                    <i class="fas fa-book fa-3x button-icon"></i>
+                    <span>About The Honor Code</span>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/history/lookup" class="btn-custom">
+                    <i class="fas fa-search fa-3x button-icon"></i>
+                    <span>Find Your Reports</span>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <a href="/submit" class="btn-custom">
+                    <i class="fas fa-file-alt fa-3x button-icon"></i>
+                    <span>Submit a Report</span>
+                </a>
+            </div>
+            <div class="col-md-3">
+
+                {% if user.is_authenticated %}
+                    <form action="{% url 'account_logout' %}" method="post">
+                        <button type="submit" class="btn-custom">
+                            {% csrf_token %}
+                            <i class="fas fa-sign-out-alt fa-3x"></i>
+                            <span>Sign Out</span>
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="/login" class="btn-custom">
+                        <i class="fas fa-sign-in-alt fa-3x"></i>
+                        <span>Sign In</span>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron text-center mt-4">
+        <h4>Questions?</h4>
+        <p>Contact us at <a href="mailto:honor@virginia.edu">honor@virginia.edu</a></p>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,55 @@
+{% extends 'submit/base.html' %}
+{% block title %}Honor Incident Categories{% endblock %}
+{% block header %}
+    <link href="../../static/submit/submission-features.css" rel="stylesheet">
+{% endblock %}
+{% block banner %}
+    <div class="submit-jumbotron">
+        <h1 class="text-center mt-5">Honor Incident Categories</h1>
+    </div>
+{% endblock %}
+{% block main %}
+    {% load static %}
+    <div class="container mt-5">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- Lying -->
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Lying</h5>
+                        <p class="card-text">Shall mean the misrepresentation of one or more facts in order to gain a
+                            benefit or harm another person, where the actor knows or should know that the
+                            misrepresentation will be relied upon by another person.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Cheating</h5>
+                        <p class="card-text">Shall mean a violation of any standards, conditions, or rules for which a
+                            student may receive benefit, credit, or acknowledgment, academic or otherwise. Cheating
+                            includes, but is not limited to, performance of any of the following acts, or abetting a
+                            fellow student in the performance of any of the following acts: using unauthorized materials
+                            in the completion of work, copying from a fellow student, plagiarism, multiple submission,
+                            false citation, false data submission, and/or unauthorized acquisition of advance knowledge
+                            of the contents of an exam or assignment.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Stealing</h5>
+                        <p class="card-text">Shall mean the taking, keeping, or appropriation of the property of another
+                            without the owner’s permission or approval. Stealing also includes the planning of or
+                            participation in the taking, keeping, or appropriation of the property of another without
+                            the owner’s permission or approval. Stealing may include, without limitation, the passing of
+                            bad checks, the failure to pay for goods or services received, the failure to pay rent, and
+                            other failures to fulfill lawful financial obligations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

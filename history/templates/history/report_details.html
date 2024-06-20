@@ -1,0 +1,88 @@
+{% extends 'submit/base.html' %}
+{% block title %}Report Details | Hoos Reporting Honor{% endblock %}
+
+{% block extra_css %}
+    <link href="../../static/history/report-detail-labels.css" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+
+    <h1>Report {{ report.report_hash }}</h1>
+
+    <h3><span class="label-bold">Report Logistics</span></h3>
+    <p><span class="label-bold">User:</span>
+        {% if report.user %}
+            {{ report.user.username }}
+        {% else %}
+            Anonymous
+        {% endif %}
+    </p>
+    <p><span class="label-bold">Submission Date ({{ current_timezone }}):</span> {{ report.submission_date }}</p>
+    <p><span class="label-bold">Edit Date ({{ current_timezone }}):</span> {{ report.edit_date }}</p>
+    <p><span class="label-bold">Status:</span> {{ report.status }}</p>
+
+    <h3><span class="label-bold">Incident Details</span></h3>
+    <p><span class="label-bold">Incident Date:</span> {{ report.incident_date }}</p>
+    <p><span class="label-bold">Incident Location:</span> {{ report.incident_location }}</p>
+    <p><span class="label-bold">Students Involved:</span> {{ report.students_involved }}</p>
+    <p><span class="label-bold">Report Summary:</span> {{ report.report_summary }}</p>
+
+    <h3><span class="label-bold">Associated Files</span></h3>
+    <ul>
+        {% if report.file_set.all %}
+            {% for file in report.file_set.all %}
+                <li>
+                    <a href="{% url 'shared:render_object_from_s3' s3_object_url=file.get_file_url %}"
+                       target="_blank">{{ file.file.name }}</a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No associated files.</li>
+        {% endif %}
+    </ul>
+
+    <h3><span class="label-bold">Admin Feedback</span></h3>
+    <p><span class="label-bold">Admin Notes:</span>
+        {% if report.report_text %}{{ report.report_text }}{% else %}No feedback{% endif %}</p>
+
+    {% if user.profile.is_admin %}
+        <div>
+            <form action="{% url 'history:update_report_status' %}" , method="post">
+                {% csrf_token %}
+                <input type="hidden" name="report_id" value="{{ report.id }}">
+                <input type="text" id="notes" name="notes" class="form-control" placeholder="Notes"/>
+                <div style="margin-top: 10px;">
+                    <button type="submit" class="btn btn-primary" m>Save Admin Notes</button>
+                </div>
+            </form>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <form action="{% url 'history:update_report_status' %}" , method="post">
+                {% csrf_token %}
+                <input type="hidden" name="report_id" value="{{ report.id }}">
+                <input type="hidden" name="status" value="APPROVED">
+                <button type="submit" class="btn btn-success">Approve</button>
+            </form>
+        </div>
+
+        <div style="margin-top: 10px;">
+            <form action="{% url 'history:update_report_status' %}" , method="post">
+                {% csrf_token %}
+                <input type="hidden" name="report_id" value="{{ report.id }}">
+                <input type="hidden" name="status" value="REJECTED">
+                <button type="submit" class="btn btn-warning">Reject</button>
+            </form>
+        </div>
+    {% endif %}
+
+    <div style="margin-top: 10px; margin-bottom: 10px">
+        <form method="POST" action="{% url 'history:delete' %}">
+            {% csrf_token %}
+            <input type="hidden" name="report_id" value="{{ report.id }}">
+            <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Are you sure you want to delete this report?');">Delete
+            </button>
+        </form>
+    </div>
+{% endblock %}
