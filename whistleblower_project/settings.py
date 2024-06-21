@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG =False
@@ -202,10 +202,10 @@ except ImportError:
 
 import os
 # AWS s3 configuration
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = 'AWS_ACCESS_KEY_ID'
+AWS_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY'
 AWS_STORAGE_BUCKET_NAME = 'honor-code-reporting-a-22'
-AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME') 
+AWS_S3_REGION_NAME = 'AWS_S3_REGION_NAME'
 AWS_S3_CUSTOM_DOMAIN = 'honor-code-reporting-a-22.s3.amazonaws.com'
 
 # For serving static files directly from S3

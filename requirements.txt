@@ -1,6 +1,6 @@
 Django
 gunicorn
-django-heroku
+#django-heroku
 dj-database-url
 django-allauth == 0.60.1 
 django-bootstrap-v5

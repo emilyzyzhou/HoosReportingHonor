@@ -42,7 +42,7 @@
 * **Natalie Yee (nvn5yn)** 
 
 * **Emily Zhou (csz6wd)**
-
+    * 
 
 ## License
 If we were to release this project under a license, it would be MIT License and we would include the full text of the MIT license in a LICENSE.txt file in our project
