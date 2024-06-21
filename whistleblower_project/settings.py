@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 # sss
-import os 
+import os
 from pathlib import Path
 
 import dj_database_url
@@ -18,18 +18,26 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+import environ
+
+# Initialize environment variables
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+# Take environment variables from .env file or Docker environment
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =False
+DEBUG = env('DJANGO_DEBUG')
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
-
 
 # Application definition
 
@@ -41,20 +49,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    
+
     # django apps
     'history',
     'login',
     'manage',
     'submit',
     'shared',
-    
+
     # all auth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    
+
     # bootstrap
     'bootstrap5',
     # 'django_bootstrap5',
@@ -67,7 +75,7 @@ INSTALLED_APPS = [
 AUTHENTICATION_BACKENDS = [
     # Default backend for Django authentication.
     'django.contrib.auth.backends.ModelBackend',
-    
+
     # Custom backend for authenticating users by e-mail.
     'shared.emailauthenication.EmailBackend',
 
@@ -108,29 +116,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'whistleblower_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-import sys
-
-# Check if the current command involves running tests
-if 'test' in sys.argv:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-        'default': dj_database_url.config(
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True,
-        )
-    }
-
+DATABASES = {
+    'default': env.db(),
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -150,7 +141,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -161,7 +151,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -176,9 +165,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # OAuth2 (Google Login)
 # https://docs.allauth.org/en/latest/
 
-SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
-SITE_ID = 4 # might need to be changed
+SITE_ID = 4  # might need to be changed
 # LOGIN_REDIRECT_URL :- destination of login page in your urls.py
 LOGIN_REDIRECT_URL = 'shared:home'
 # ACCOUNT_LOGOUT_REDIRECT :- where to redirect when user logout
@@ -196,11 +185,13 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 try:
     if 'HEROKU' in os.environ:
         import django_heroku
+
         django_heroku.settings(locals())
 except ImportError:
     found = False
 
 import os
+
 # AWS s3 configuration
 AWS_ACCESS_KEY_ID = 'AWS_ACCESS_KEY_ID'
 AWS_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY'
