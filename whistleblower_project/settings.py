@@ -77,7 +77,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 
     # Custom backend for authenticating users by e-mail.
-    'shared.emailauthenication.EmailBackend',
+    'shared.emailauthentication.EmailBackend',
 
     # Allauth specific authentication methods, such as login by e-mail.
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -109,6 +109,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'allauth.account.context_processors.account',
+                # 'allauth.socialaccount.context_processors.socialaccount',
             ],
         },
     },
@@ -177,6 +179,9 @@ SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': ['profile', 'email'],
         'AUTH_PARAMS': {'access_type': 'online'},
+        'METHOD': 'oauth2',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2',
     }
 }
 
