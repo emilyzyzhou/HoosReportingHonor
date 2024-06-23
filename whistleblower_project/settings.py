@@ -14,6 +14,30 @@ import os
 from pathlib import Path
 
 import dj_database_url
+from django.core.checks import templates
+
+# import logging
+#
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#         'allauth': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -58,10 +82,10 @@ INSTALLED_APPS = [
     'shared',
 
     # all auth
+    'allauth.socialaccount.providers.google',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
 
     # bootstrap
     'bootstrap5',
@@ -94,6 +118,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'history.middleware.TimezoneMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware'
 ]
 
 ROOT_URLCONF = 'whistleblower_project.urls'
@@ -168,20 +193,21 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # https://docs.allauth.org/en/latest/
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
 
-SITE_ID = 4  # might need to be changed
+SITE_ID = 6  # might need to be changed
 # LOGIN_REDIRECT_URL :- destination of login page in your urls.py
 LOGIN_REDIRECT_URL = 'shared:home'
-# ACCOUNT_LOGOUT_REDIRECT :- where to redirect when user logout
+LOGOUT_REDIRECT_URL = 'shared:home'
 ACCOUNT_LOGOUT_REDIRECT = 'home'
+
+# SOCIALACCOUNT_ADAPTER = 'login.adapters.MySocialAccountAdapter'
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': ['profile', 'email'],
         'AUTH_PARAMS': {'access_type': 'online'},
-        'METHOD': 'oauth2',
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v2',
+        'REDIRECT_URI': 'https://yourdomain.com/accounts/google/login/callback/',
     }
 }
 
